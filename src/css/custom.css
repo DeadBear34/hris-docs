@@ -1,0 +1,27 @@
+/* Warna utama mengikuti aplikasi HRIS (#1a78d7) */
+:root {
+  --ifm-color-primary: #1a78d7;
+  --ifm-color-primary-dark: #176cc2;
+  --ifm-color-primary-darker: #1666b7;
+  --ifm-color-primary-darkest: #125497;
+  --ifm-color-primary-light: #2b86e3;
+  --ifm-color-primary-lighter: #378de4;
+  --ifm-color-primary-lightest: #5aa1e9;
+  --ifm-code-font-size: 92%;
+}
+
+[data-theme="dark"] {
+  --ifm-color-primary: #5aa1e9;
+  --ifm-color-primary-dark: #3f91e5;
+  --ifm-color-primary-darker: #3289e3;
+  --ifm-color-primary-darkest: #1d73cb;
+  --ifm-color-primary-light: #75b1ed;
+  --ifm-color-primary-lighter: #82b8ee;
+  --ifm-color-primary-lightest: #a9cff4;
+}
+
+/* Tabel lebar dapat digeser di layar kecil tanpa menggeser halaman */
+.markdown table {
+  display: block;
+  overflow-x: auto;
+}

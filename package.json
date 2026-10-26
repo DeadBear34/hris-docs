@@ -1,0 +1,43 @@
+{
+  "name": "hris-docs",
+  "version": "0.7.1",
+  "private": true,
+  "description": "Dokumentasi dan riwayat versi HRIS (docs.hris.click)",
+  "engines": {
+    "node": "^22.23.4 || >=24.22.1"
+  },
+  "scripts": {
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "serve": "docusaurus serve",
+    "clear": "docusaurus clear",
+    "docs:version": "docusaurus docs:version"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@docusaurus/core": "3.10.2",
+    "@docusaurus/preset-classic": "3.10.2",
+    "@mdx-js/react": "^3.1.1",
+    "clsx": "^2.1.1",
+    "prism-react-renderer": "^2.4.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "overrides": {
+    "serialize-javascript": "^7.1.4",
+    "tinypool": "^2.2.0",
+    "postcss-selector-parser": "^7.1.7",
+    "uuid": "^11.1.1"
+  }
+}

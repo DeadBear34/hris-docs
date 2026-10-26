@@ -1,0 +1,24 @@
+major:
+  label: MAYOR
+  description: Perubahan yang merusak cara pakai lama
+minor:
+  label: MINOR
+  description: Rilis berisi fitur baru
+patch:
+  label: PATCH
+  description: Rilis berisi perbaikan bug dan keamanan
+fitur:
+  label: Fitur
+  description: Rilis yang menambahkan fitur
+perbaikan:
+  label: Perbaikan
+  description: Rilis yang memperbaiki bug
+keamanan:
+  label: Keamanan
+  description: Rilis yang menutup celah keamanan
+breaking:
+  label: Breaking
+  description: Rilis yang mengubah cara pakai lama
+migrasi:
+  label: Migrasi
+  description: Rilis yang membutuhkan migrasi database

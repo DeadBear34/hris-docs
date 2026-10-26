@@ -1,0 +1,21 @@
+{
+  "docs": [
+    "intro",
+    {
+      "type": "category",
+      "label": "Fitur",
+      "collapsed": false,
+      "items": ["fitur/karyawan", "fitur/cuti", "fitur/absensi", "fitur/notifikasi"]
+    },
+    {
+      "type": "category",
+      "label": "API",
+      "items": ["api/referensi-api", "api/autentikasi-dan-error"]
+    },
+    {
+      "type": "category",
+      "label": "QA",
+      "items": ["qa/panduan-qa"]
+    }
+  ]
+}

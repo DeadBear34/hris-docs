@@ -1,0 +1,26 @@
+# docs.hris.click. Ikut jaringan Docker milik backend (hris-backend_default)
+# supaya Cloudflare Tunnel di container hris-cloudflared dapat menjangkaunya
+# dengan nama service "docs", sama seperti frontend dan backend.
+#
+# Dashboard Zero Trust → tunnel → Public Hostname:
+#   docs.hris.click → HTTP → docs:8080
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  docs:
+    build: .
+    image: ghcr.io/deadbear34/hris-docs:${IMAGE_TAG:-latest}
+    container_name: hris-docs
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3001:8080"
+    logging: *logging
+
+networks:
+  default:
+    name: hris-backend_default
+    external: true

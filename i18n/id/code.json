@@ -1,0 +1,18 @@
+{
+  "theme.blog.post.plurals": {
+    "message": "{count} pos",
+    "description": "Bahasa Indonesia tidak membedakan bentuk tunggal dan jamak"
+  },
+  "theme.docs.tagDocListPageTitle.nDocsTagged": {
+    "message": "{count} dokumen ditandai",
+    "description": "Bahasa Indonesia tidak membedakan bentuk tunggal dan jamak"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} menit membaca",
+    "description": "Bahasa Indonesia tidak membedakan bentuk tunggal dan jamak"
+  },
+  "theme.SearchPage.documentsFound.plurals": {
+    "message": "{count} dokumen ditemukan",
+    "description": "Bahasa Indonesia tidak membedakan bentuk tunggal dan jamak"
+  }
+}
