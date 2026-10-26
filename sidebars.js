@@ -1,33 +1,48 @@
 // @ts-check
 
-// Sidebar versi berikutnya (folder docs/). Sidebar versi yang sudah rilis
-// dibekukan otomatis ke versioned_sidebars/ oleh `npm run docs:version`
+// Sidebar for the next version (docs/ folder). Sidebars of released versions
+// are frozen into versioned_sidebars/ by `npm run docs:version`.
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
   docs: [
-    "intro",
     {
       type: "category",
-      label: "Fitur",
+      label: "Getting Started",
       collapsed: false,
       items: [
-        "fitur/karyawan",
-        "fitur/struktur-organisasi",
-        "fitur/cuti",
-        "fitur/absensi",
-        "fitur/notifikasi",
+        "intro",
+        "getting-started/accessing-hris",
+        "getting-started/roles-and-permissions",
+      ],
+    },
+    {
+      type: "category",
+      label: "Guides",
+      collapsed: false,
+      items: [
+        "guides/employees",
+        "guides/organization-structure",
+        "guides/leave-management",
+        "guides/attendance",
+        "guides/notifications",
       ],
     },
     {
       type: "category",
       label: "API",
-      items: ["api/referensi-api", "api/autentikasi-dan-error"],
+      collapsed: false,
+      items: [
+        "api/overview",
+        "api/authentication",
+        "api/errors",
+        "api/rate-limits",
+      ],
     },
     {
       type: "category",
-      label: "QA",
-      items: ["qa/panduan-qa"],
+      label: "Testing",
+      items: ["testing/registration-testing"],
     },
   ],
 };

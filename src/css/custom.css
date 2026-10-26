@@ -1,4 +1,4 @@
-/* Warna utama mengikuti aplikasi HRIS (#1a78d7) */
+/* Primary color matches the HRIS app (#1a78d7) */
 :root {
   --ifm-color-primary: #1a78d7;
   --ifm-color-primary-dark: #176cc2;
@@ -20,7 +20,7 @@
   --ifm-color-primary-lightest: #a9cff4;
 }
 
-/* Tabel lebar dapat digeser di layar kecil tanpa menggeser halaman */
+/* Wide tables scroll horizontally on small screens instead of the whole page */
 .markdown table {
   display: block;
   overflow-x: auto;

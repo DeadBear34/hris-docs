@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Referensi API HRIS</title>
+    <title>HRIS API Reference</title>
     <link rel="icon" href="/img/favicon.svg" />
     <style>
       body { margin: 0; font-family: system-ui, sans-serif; }
@@ -19,15 +19,15 @@
   </head>
   <body>
     <div class="bar">
-      <a href="/docs/api/referensi-api">← HRIS Docs</a>
-      <label for="version">Versi backend</label>
+      <a href="/docs/api/overview">← HRIS Docs</a>
+      <label for="version">Backend version</label>
       <select id="version"></select>
     </div>
     <div id="redoc"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/redoc@2.5.1/bundles/redoc.standalone.js"></script>
     <script>
-      // Versi diambil dari ?v=, dicocokkan dengan daftar di /openapi/versions.json
+      // The version comes from ?v= and must be listed in /openapi/versions.json
       (async function () {
         const select = document.getElementById("version");
         const target = document.getElementById("redoc");
@@ -36,7 +36,7 @@
         try {
           versions = await (await fetch("/openapi/versions.json")).json();
         } catch {
-          target.innerHTML = '<p class="error">Daftar versi tidak dapat dimuat.</p>';
+          target.innerHTML = '<p class="error">The version list could not be loaded.</p>';
           return;
         }
 
@@ -46,7 +46,7 @@
         for (const v of versions) {
           const option = document.createElement("option");
           option.value = v;
-          option.textContent = v === versions[0] ? `${v} (terbaru)` : v;
+          option.textContent = v === versions[0] ? `${v} (latest)` : v;
           option.selected = v === version;
           select.appendChild(option);
         }
@@ -55,7 +55,7 @@
           location.search = `?v=${encodeURIComponent(select.value)}`;
         });
 
-        document.title = `Referensi API HRIS ${version}`;
+        document.title = `HRIS API Reference ${version}`;
         Redoc.init(
           `/openapi/${version}.json`,
           { hideDownloadButton: false, expandResponses: "200,201" },

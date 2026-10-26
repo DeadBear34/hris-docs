@@ -1,44 +1,37 @@
-// Membuat halaman Catatan Rilis (folder rilis/) dari CHANGELOG.md backend.
-// CHANGELOG.md tetap satu-satunya sumber; halaman yang sudah ada ditimpa,
-// jadi jangan mengedit berkas di rilis/ dengan tangan.
+// Generates the changelog pages (changelog/) from the backend CHANGELOG.md.
+// CHANGELOG.md stays the single source of truth: generated pages are
+// overwritten on every run, so never edit the files in changelog/ by hand.
 //
 //   node scripts/sync-changelog.mjs ../hris-backend/CHANGELOG.md
 import { readFileSync, writeFileSync, readdirSync, unlinkSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const source = resolve(process.argv[2] ?? "../hris-backend/CHANGELOG.md");
-const outDir = resolve("rilis");
+const outDir = resolve("changelog");
 
-const HEADINGS = {
-  Added: "Ditambahkan",
-  Changed: "Diubah",
-  Fixed: "Diperbaiki",
-  Security: "Keamanan",
-  Deprecated: "Akan dihapus",
-  Removed: "Dihapus",
-  Migration: "Migrasi database",
-};
-
+// Keep a Changelog section → tag
 const TAG_FOR = {
-  Added: "fitur",
-  Fixed: "perbaikan",
-  Security: "keamanan",
-  Migration: "migrasi",
+  Added: "feature",
+  Fixed: "fix",
+  Security: "security",
+  Migration: "migration",
 };
 
 const KIND_LABEL = {
-  major: "MAYOR: perubahan yang merusak cara pakai lama",
-  minor: "MINOR: fitur baru",
-  patch: "PATCH: perbaikan bug dan keamanan",
+  major: "Major release with breaking changes",
+  minor: "Minor release with new features",
+  patch: "Patch release with fixes",
 };
+
+// Documentation versions that exist on the site; the first one is the latest
+const DOC_VERSIONS = JSON.parse(readFileSync("versions.json", "utf8"));
 
 const text = readFileSync(source, "utf8").replace(/\r\n/g, "\n");
 
 // ## [0.7.1] - 2026-10-26
 const releases = [];
-const sectionRe = /^## \[(\d+\.\d+\.\d+)\] - (\d{4}-\d{2}-\d{2})\n([\s\S]*?)(?=^## \[|^\[\d|\Z)/gm;
-for (const match of text.matchAll(sectionRe)) {
-  const [, version, date, body] = match;
+const sectionRe = /^## \[(\d+\.\d+\.\d+)\] - (\d{4}-\d{2}-\d{2})\n([\s\S]*?)(?=^## \[|^\[\d)/gm;
+for (const [, version, date, body] of text.matchAll(sectionRe)) {
   const groups = [];
   for (const part of body.split(/^### /m).slice(1)) {
     const [heading, ...lines] = part.split("\n");
@@ -49,26 +42,26 @@ for (const match of text.matchAll(sectionRe)) {
 }
 
 if (releases.length === 0) {
-  console.error(`Tidak ada rilis yang terbaca dari ${source}`);
+  console.error(`No releases found in ${source}`);
   process.exit(1);
 }
 
-// urut dari yang terlama, supaya jenis rilis dibandingkan dengan sebelumnya
-releases.sort((a, b) => compare(a.version, b.version));
-
-function compare(a, b) {
+const compare = (a, b) => {
   const pa = a.split(".").map(Number);
   const pb = b.split(".").map(Number);
   for (let i = 0; i < 3; i++) if (pa[i] !== pb[i]) return pa[i] - pb[i];
   return 0;
-}
+};
+
+// oldest first, so each release is compared with the one before it
+releases.sort((a, b) => compare(a.version, b.version));
 
 function kindOf(previous, current) {
   if (!previous) return "minor";
-  const [pMaj, pMin] = previous.split(".").map(Number);
-  const [cMaj, cMin] = current.split(".").map(Number);
-  if (cMaj !== pMaj) return "major";
-  if (cMin !== pMin) return "minor";
+  const [pMajor, pMinor] = previous.split(".").map(Number);
+  const [cMajor, cMinor] = current.split(".").map(Number);
+  if (cMajor !== pMajor) return "major";
+  if (cMinor !== pMinor) return "minor";
   return "patch";
 }
 
@@ -84,7 +77,7 @@ releases.forEach((release, index) => {
   const previous = releases[index - 1]?.version;
   const kind = kindOf(previous, release.version);
   const breaking = release.groups.some((g) => g.items.includes("BREAKING"));
-  const docsVersion = release.version.split(".").slice(0, 2).join(".");
+  const docVersion = release.version.split(".").slice(0, 2).join(".");
 
   const tags = new Set([kind]);
   for (const group of release.groups) {
@@ -101,32 +94,29 @@ releases.forEach((release, index) => {
     `tags: [${[...tags].join(", ")}]`,
     "---",
     "",
-    `**Jenis rilis:** ${KIND_LABEL[kind]}${breaking ? " (berisi perubahan yang merusak)" : ""}`,
+    `**${KIND_LABEL[kind]}${breaking ? ", including breaking changes" : ""}.**${previous ? ` Previous version: ${previous}.` : ""}`,
+    "",
+    "<!-- truncate -->",
     "",
   ];
 
-  if (previous) {
-    lines.push(`Versi sebelumnya: ${previous}`, "");
-  }
-
-  lines.push("<!-- truncate -->", "");
-
   for (const group of release.groups) {
-    lines.push(`## ${HEADINGS[group.heading] ?? group.heading}`, "", group.items, "");
+    lines.push(`## ${group.heading}`, "", group.items, "");
   }
 
   const links = [];
   if (apiVersions.includes(release.version)) {
-    links.push(`[Referensi API ${release.version}](pathname:///api/?v=${release.version})`);
+    links.push(`[API reference ${release.version}](pathname:///api/?v=${release.version})`);
   }
-  if (["0.6", "0.7"].includes(docsVersion) || index === releases.length - 1) {
-    links.push(`[Dokumentasi ${docsVersion}.x](pathname:///docs/${docsVersion === "0.7" ? "" : `${docsVersion}/`}intro)`);
+  if (DOC_VERSIONS.includes(docVersion)) {
+    const path = docVersion === DOC_VERSIONS[0] ? "intro" : `${docVersion}/intro`;
+    links.push(`[Documentation ${docVersion}.x](pathname:///docs/${path})`);
   }
   if (links.length > 0) {
-    lines.push("## Tautan", "", ...links.map((l) => `- ${l}`), "");
+    lines.push("## Resources", "", ...links.map((link) => `- ${link}`), "");
   }
 
   writeFileSync(join(outDir, `${release.date}-${slug}.md`), lines.join("\n"));
 });
 
-console.log(`${releases.length} catatan rilis ditulis ke ${outDir}`);
+console.log(`Wrote ${releases.length} changelog pages to ${outDir}`);

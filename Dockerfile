@@ -1,5 +1,5 @@
-# Situs statis: dibangun dengan Node, disajikan nginx tanpa root.
-# Versi Node mengikuti backend (Security Release 21 Okt 2026)
+# Static site: built with Node, served by unprivileged nginx.
+# The Node version matches the backend (October 21, 2026 security release)
 ARG NODE_IMAGE=node:22.23.4-bookworm-slim
 
 FROM ${NODE_IMAGE} AS build

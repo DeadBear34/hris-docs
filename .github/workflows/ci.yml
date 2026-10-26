@@ -1,5 +1,5 @@
-# Memastikan situs dokumentasi dapat dibangun: tautan rusak, versi yang
-# hilang, atau Markdown yang salah menggagalkan build (onBrokenLinks: throw)
+# Ensures the documentation site builds: broken links, missing versions, or
+# invalid Markdown fail the build (onBrokenLinks: throw)
 name: CI
 
 on:

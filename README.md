@@ -1,68 +1,68 @@
-# HRIS Docs
+# HRIS Documentation
 
-Situs dokumentasi dan riwayat versi HRIS PT Archenix Komputasi Indonesia, tayang di **docs.hris.click**. Dibangun dengan [Docusaurus](https://docusaurus.io) 3 dan disajikan sebagai HTML statis oleh nginx.
+Source of **docs.hris.click**: guides, API reference, and release history for the HRIS platform of PT Archenix Komputasi Indonesia. Built with [Docusaurus](https://docusaurus.io) 3 and served as static HTML by nginx.
 
-## Isi
+## Structure
 
-| Bagian | Folder | Berversi? |
+| Content | Location | Versioned |
 | --- | --- | --- |
-| Panduan fitur, API, QA | `docs/` (Next), `versioned_docs/version-X/` | Ya, per MINOR |
-| Catatan Rilis | `rilis/` (dibuat dari `CHANGELOG.md` backend) | Satu halaman per rilis |
-| Kebijakan Versi, Kompatibilitas, Proses Rilis | `src/pages/*.md` | Tidak |
-| Referensi API | `static/api/index.html` + `static/openapi/<versi>.json` | Ya, per rilis |
+| Getting started, guides, API, testing | `docs/` (Next), `versioned_docs/version-X/` | Per MINOR version |
+| Changelog | `changelog/`, generated from the backend `CHANGELOG.md` | One page per release |
+| Versioning policy, compatibility, release process | `src/pages/*.md` | No |
+| API reference | `static/api/index.html` and `static/openapi/<version>.json` | Per release |
 
-### Versi dokumentasi
+### Documentation versions
 
-| Menu | Folder | URL |
+| Menu label | Folder | URL |
 | --- | --- | --- |
-| 0.7.x (terbaru) | `versioned_docs/version-0.7` | `/docs/...` |
+| 0.7.x (latest) | `versioned_docs/version-0.7` | `/docs/...` |
 | 0.6.x | `versioned_docs/version-0.6` | `/docs/0.6/...` |
-| Next (belum rilis) | `docs/` | `/docs/next/...` |
+| Next (unreleased) | `docs/` | `/docs/next/...` |
 
-Perubahan untuk rilis berikutnya ditulis di `docs/`. Versi yang sudah rilis hanya diubah untuk memperbaiki kesalahan tulis.
+Write changes for the upcoming release in `docs/`. Released versions are edited only to fix mistakes.
 
-## Menjalankan di laptop
+## Local development
 
-Prasyarat: Node.js 22.23.4 (`nvm use`).
+Requires Node.js 22.23.4 (`nvm use`).
 
 ```bash
 npm install
-npm start          # http://localhost:3000, reload otomatis
-npm run build      # build produksi ke folder build/, gagal bila ada tautan rusak
-npm run serve      # menyajikan hasil build
+npm start          # http://localhost:3000 with live reload
+npm run build      # production build in build/; fails on broken links
+npm run serve      # serve the production build
 ```
 
-## Membuat rilis
+## Publishing a release
 
-Langkah lengkapnya ada di halaman **Proses Rilis** (`src/pages/proses-rilis.md`). Ringkasnya:
+See the **Release process** page (`src/pages/release-process.md`). In short:
 
 ```bash
-# 1. Catatan rilis dari CHANGELOG backend (jangan edit rilis/*.md dengan tangan)
+# 1. Changelog pages from the backend changelog (never edit changelog/*.md by hand)
 node scripts/sync-changelog.mjs ../hris-backend/CHANGELOG.md
 
-# 2. Referensi API versi ini, lalu tambahkan versinya ke static/openapi/versions.json
+# 2. API reference for the release, then add the version to static/openapi/versions.json
 (cd ../hris-backend && npm run docs:openapi -- ../hris-docs/static/openapi/0.8.0.json)
 
-# 3. Rilis MINOR/MAYOR: bekukan dokumentasi, lalu perbarui LATEST dan label di docusaurus.config.js
+# 3. MINOR/MAJOR releases: freeze the docs, then update LATEST and the labels in docusaurus.config.js
 npm run docs:version 0.8
 ```
 
-## Deploy di VM
+## Deployment
 
-Container `hris-docs` ikut jaringan Docker backend (`hris-backend_default`), sama seperti frontend.
+The `hris-docs` container joins the backend's Docker network (`hris-backend_default`), like the frontend.
 
 ```bash
 cd /home/awanio/hris-docs
 git pull origin main
 docker compose up -d --build
-docker ps --format "table {{.Names}}\t{{.Status}}"   # hris-docs harus (healthy)
+docker ps --format "table {{.Names}}\t{{.Status}}"   # hris-docs should be (healthy)
 ```
 
-Pertama kali saja:
+One-time setup:
 
-1. **Cloudflare Zero Trust → Networks → Tunnels →** tunnel HRIS **→ Public Hostname → Add**: subdomain `docs`, domain `hris.click`, service `HTTP`, URL `docs:8080`.
-2. **Zero Trust → Access → Applications → Add (Self-hosted)**: domain `docs.hris.click`, policy *Allow* untuk email pembimbing, tim, dan QA. Dokumentasi memuat peta API, jadi sengaja tidak dibuka untuk publik.
+1. **Cloudflare Zero Trust → Networks → Tunnels →** the HRIS tunnel **→ Public Hostname → Add:** subdomain `docs`, domain `hris.click`, service `HTTP`, URL `docs:8080`.
+2. **Zero Trust → Access → Applications → Add (Self-hosted):** domain `docs.hris.click`, with an *Allow* policy for the supervisor, the team, and QA. The documentation exposes the API surface, so it is not public.
 
-## Keamanan dependency
+## Dependency security
 
-Semua package adalah perkakas build (`devDependencies`); yang tayang hanya HTML statis. Beberapa dependency turunan Docusaurus dipaksa ke versi yang sudah ditambal lewat `overrides` di `package.json` (serialize-javascript, tinypool, postcss-selector-parser, uuid). Hapus override tersebut setelah Docusaurus merilis versi yang sudah memakainya, lalu pastikan `npm audit` tetap bersih dan `npm run build` tetap berhasil.
+Every package is a build tool (`devDependencies`); only static HTML is deployed. Some transitive Docusaurus dependencies are pinned to patched versions through `overrides` in `package.json` (serialize-javascript, tinypool, postcss-selector-parser, uuid). Remove those overrides once Docusaurus ships the patched versions, and confirm that `npm audit` stays clean and `npm run build` still succeeds.

@@ -1,53 +1,45 @@
 ---
-sidebar_position: 1
-title: Pengantar
+title: Introduction
+description: What HRIS is, what it covers, and how this documentation is organized.
 slug: /intro
 ---
 
-# HRIS PT Archenix Komputasi Indonesia
+# Introduction
 
-HRIS (Human Resource Information System) adalah aplikasi internal untuk mengelola karyawan, struktur organisasi, cuti, dan absensi PT Archenix Komputasi Indonesia, perusahaan yang berfokus pada data center dan kecerdasan buatan.
+HRIS (Human Resource Information System) is the internal platform PT Archenix Komputasi Indonesia uses to manage employees, the organization structure, leave, and attendance. PT Archenix is a data center and artificial intelligence company.
 
-Dokumentasi ini berlaku untuk **HRIS 0.7.x**. Versi lain dapat dipilih lewat menu versi di kanan atas.
+This documentation covers **HRIS 0.7.x**. Use the version menu in the top-right corner to read the documentation for other versions.
 
-## Bagian aplikasi
+## Components
 
-| Bagian | Alamat | Isi |
+| Component | URL | Description |
 | --- | --- | --- |
-| Aplikasi web | [hris.click](https://hris.click) | Antarmuka karyawan, atasan, HR, dan admin (React, PWA) |
-| API | [api.hris.click](https://api.hris.click/health) | REST API dan WebSocket notifikasi (Node.js, Express, PostgreSQL) |
-| Dokumentasi | docs.hris.click | Halaman ini: panduan fitur, referensi API, dan riwayat versi |
+| Web app | [hris.click](https://hris.click) | Interface for employees, managers, HR, and administrators (React, installable as a PWA) |
+| API | [api.hris.click](https://api.hris.click/health) | REST API and real-time notification WebSocket (Node.js, Express, PostgreSQL) |
+| Documentation | docs.hris.click | This site: guides, API reference, and release history |
 
-`GET https://api.hris.click/health` menampilkan versi backend yang sedang berjalan:
+## Modules
+
+| Module | What it does | Guide |
+| --- | --- | --- |
+| Employees | Employee records, accounts, photos, and bulk import | [Employees](guides/employees.md) |
+| Organization structure | Nested units, positions, reporting lines, and the org chart | [Organization structure](guides/organization-structure.md) |
+| Leave management | Requests, single-level approval, balances, and concurrent leave limits | [Leave management](guides/leave-management.md) |
+| Attendance | Check-in and check-out, offline sync, corrections, and reports | [Attendance](guides/attendance.md) |
+| Notifications | Inbox and real-time notifications | [Notifications](guides/notifications.md) |
+
+## How this documentation is organized
+
+- **Getting Started** explains how to access HRIS and how roles and permissions work.
+- **Guides** describe each module: its workflow, business rules, and edge cases.
+- **API** covers authentication, errors, and rate limits. The full endpoint reference is in [API Reference](pathname:///api/).
+- **Testing** contains procedures for QA.
+- The [Changelog](pathname:///changelog) lists every release. The [Versioning policy](pathname:///versioning) explains what each version number means.
+
+## Check the running version
+
+`GET https://api.hris.click/health` returns the backend version that is currently deployed:
 
 ```json
 { "success": true, "message": "Server running", "version": "0.7.1", "redis": "ready" }
 ```
-
-## Modul
-
-| Modul | Ringkasan | Panduan |
-| --- | --- | --- |
-| Karyawan | Data karyawan, akun, foto, impor massal | [Karyawan](fitur/karyawan.md) |
-| Struktur organisasi | Unit bertingkat, jabatan, atasan jabatan, bagan organisasi | [Struktur Organisasi](fitur/struktur-organisasi.md) |
-| Cuti | Pengajuan, persetujuan satu tingkat, saldo, batas cuti bersamaan | [Cuti](fitur/cuti.md) |
-| Absensi | Absen masuk dan pulang, offline, koreksi, laporan | [Absensi](fitur/absensi.md) |
-| Notifikasi | Kotak masuk dan notifikasi realtime | [Notifikasi](fitur/notifikasi.md) |
-
-## Peran dan hak akses
-
-Sistem hanya mengenal dua peran: **`admin`** dan **`employee`**. Admin melewati seluruh pemeriksaan hak akses.
-
-Kemampuan lain (misalnya menyetujui cuti atau mengelola struktur) diberikan lewat **fitur yang ditempelkan ke jabatan**, bukan lewat peran. HR Manager, misalnya, adalah jabatan biasa yang memegang fitur `leave.approve_all`, `employee.create`, `organization.manage`, dan seterusnya. Admin dapat mengubah pemberian fitur per jabatan dari menu Fitur tanpa mengubah kode.
-
-| Kelompok | Contoh fitur |
-| --- | --- |
-| Karyawan | `employee.view_all`, `employee.create`, `employee.update`, `employee.approve_user` |
-| Organisasi | `organization.manage`, `organization.schedule`, `organization.holiday` |
-| Cuti | `leave.approve_team`, `leave.approve_all`, `leave.view_all`, `leave.adjust_balance` |
-| Absensi | `attendance.view_team`, `attendance.view_all`, `attendance.correct`, `attendance.report` |
-| Sistem | `system.view_log`, `system.view_api_docs` |
-
-## Riwayat versi
-
-Setiap perubahan dicatat di [Catatan Rilis](pathname:///rilis). Aturan kapan nomor versi naik ada di [Kebijakan Versi](pathname:///kebijakan-versi).

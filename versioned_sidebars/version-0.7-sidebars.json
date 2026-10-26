@@ -1,31 +1,43 @@
 {
   "docs": [
-    "intro",
     {
       "type": "category",
-      "label": "Fitur",
+      "label": "Getting Started",
       "collapsed": false,
       "items": [
-        "fitur/karyawan",
-        "fitur/struktur-organisasi",
-        "fitur/cuti",
-        "fitur/absensi",
-        "fitur/notifikasi"
+        "intro",
+        "getting-started/accessing-hris",
+        "getting-started/roles-and-permissions"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Guides",
+      "collapsed": false,
+      "items": [
+        "guides/employees",
+        "guides/organization-structure",
+        "guides/leave-management",
+        "guides/attendance",
+        "guides/notifications"
       ]
     },
     {
       "type": "category",
       "label": "API",
+      "collapsed": false,
       "items": [
-        "api/referensi-api",
-        "api/autentikasi-dan-error"
+        "api/overview",
+        "api/authentication",
+        "api/errors",
+        "api/rate-limits"
       ]
     },
     {
       "type": "category",
-      "label": "QA",
+      "label": "Testing",
       "items": [
-        "qa/panduan-qa"
+        "testing/registration-testing"
       ]
     }
   ]

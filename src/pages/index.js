@@ -4,49 +4,52 @@ import styles from "./index.module.css";
 
 const SECTIONS = [
   {
-    title: "Panduan fitur",
-    body: "Karyawan, struktur organisasi, cuti, absensi, dan notifikasi: alur dan aturannya.",
+    title: "Get started",
+    body: "What HRIS covers, how to access it, and how roles and permissions work.",
     to: "/docs/intro",
   },
   {
-    title: "Catatan rilis",
-    body: "Apa yang berubah di setiap versi: fitur baru, perbaikan, dan keamanan.",
-    to: "/rilis",
+    title: "Guides",
+    body: "Employees, organization structure, leave, attendance, and notifications.",
+    to: "/docs/guides/employees",
   },
   {
-    title: "Referensi API",
-    body: "Setiap endpoint backend, disimpan satu salinan per versi rilis.",
-    to: "/docs/api/referensi-api",
+    title: "API reference",
+    body: "Every backend endpoint, published for each release.",
+    to: "/docs/api/overview",
   },
   {
-    title: "Kebijakan versi",
-    body: "Arti MAYOR.MINOR.PATCH dan kapan setiap angka naik.",
-    to: "/kebijakan-versi",
+    title: "Changelog",
+    body: "What changed in every release: features, fixes, and security updates.",
+    to: "/changelog",
   },
 ];
 
 export default function Home() {
   return (
     <Layout
-      title="Beranda"
-      description="Dokumentasi dan riwayat versi HRIS PT Archenix Komputasi Indonesia"
+      title="Home"
+      description="Guides, API reference, and release history for HRIS by PT Archenix Komputasi Indonesia"
     >
       <header className={styles.hero}>
         <div className="container">
-          <h1 className={styles.title}>HRIS Docs</h1>
+          <h1 className={styles.title}>HRIS Documentation</h1>
           <p className={styles.subtitle}>
-            Dokumentasi, panduan fitur, dan riwayat versi HRIS PT Archenix
-            Komputasi Indonesia.
+            Guides, API reference, and release history for the HRIS platform of
+            PT Archenix Komputasi Indonesia.
           </p>
           <p className={styles.version}>
-            Versi terbaru: <strong>0.7.1</strong>
+            Latest release: <Link to="/changelog/v0-7-1">0.7.1</Link>
           </p>
           <div className={styles.actions}>
             <Link className="button button--primary button--lg" to="/docs/intro">
-              Mulai membaca
+              Read the docs
             </Link>
-            <Link className="button button--secondary button--lg" to="/rilis">
-              Catatan rilis
+            <Link
+              className="button button--secondary button--lg"
+              to="/docs/api/overview"
+            >
+              API overview
             </Link>
           </div>
         </div>
