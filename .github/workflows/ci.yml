@@ -15,6 +15,24 @@ permissions:
   contents: read
 
 jobs:
+  # This repository is public: block commits that carry keys, tokens, or
+  # passwords. Only the commits of this push or pull request are scanned.
+  secrets:
+    name: Scan for secrets
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
     name: Build dokumentasi
     runs-on: ubuntu-latest

@@ -1,0 +1,9 @@
+# Secret scanning for this public repository, using gitleaks' default rules.
+title = "hris-docs"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Lockfile hashes"
+paths = ['''^package-lock\.json$''']

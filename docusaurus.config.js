@@ -5,14 +5,17 @@ import { themes as prismThemes } from "prism-react-renderer";
 // - "0.7"  : the version running in production, served at /docs
 // - "0.6"  : the previous version, served at /docs/0.6
 // - current: the docs/ folder, i.e. the next unreleased version, served at /docs/next
-// How to cut a new version: /release-process
+// How to cut a new version: RELEASING.md
+//
+// This site is public. It only contains end-user guides and release notes.
+// API references, QA procedures, and infrastructure details stay internal.
 const LATEST = "0.7";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "HRIS Documentation",
   tagline:
-    "Guides, API reference, and release history for HRIS by PT Archenix Komputasi Indonesia",
+    "User guides and release notes for HRIS by PT Archenix Komputasi Indonesia",
   favicon: "img/favicon.svg",
 
   url: "https://docs.hris.click",
@@ -53,10 +56,10 @@ const config = {
           },
         },
         blog: {
-          path: "changelog",
-          routeBasePath: "changelog",
-          blogTitle: "Changelog",
-          blogDescription: "Every HRIS release and what changed",
+          path: "release-notes",
+          routeBasePath: "release-notes",
+          blogTitle: "Release Notes",
+          blogDescription: "What is new in every HRIS release",
           blogSidebarTitle: "All releases",
           blogSidebarCount: "ALL",
           postsPerPage: 10,
@@ -66,8 +69,8 @@ const config = {
           onUntruncatedBlogPosts: "ignore",
           feedOptions: {
             type: ["rss", "atom"],
-            title: "HRIS Changelog",
-            description: "Every HRIS release and what changed",
+            title: "HRIS Release Notes",
+            description: "What is new in every HRIS release",
           },
         },
         theme: {
@@ -84,7 +87,7 @@ const config = {
       announcementBar: {
         id: "release-0-7-1",
         content:
-          'HRIS 0.7.1 is out with security fixes. <a href="/changelog/v0-7-1">Read the release notes</a>.',
+          'HRIS 0.7.1 is here with security and reliability improvements. <a href="/release-notes/v0-7-1">See what is new</a>.',
         isCloseable: true,
       },
       navbar: {
@@ -97,13 +100,7 @@ const config = {
             position: "left",
             label: "Docs",
           },
-          {
-            href: "pathname:///api/",
-            label: "API Reference",
-            position: "left",
-            target: "_self",
-          },
-          { to: "/changelog", label: "Changelog", position: "left" },
+          { to: "/release-notes", label: "Release Notes", position: "left" },
           {
             type: "docsVersionDropdown",
             position: "right",
@@ -119,27 +116,26 @@ const config = {
         style: "dark",
         links: [
           {
-            title: "Documentation",
+            title: "Guides",
             items: [
               { label: "Introduction", to: "/docs/intro" },
-              { label: "Guides", to: "/docs/guides/employees" },
-              { label: "API overview", to: "/docs/api/overview" },
+              { label: "For employees", to: "/docs/employee-guide/requesting-leave" },
+              { label: "For managers", to: "/docs/manager-guide/approving-leave" },
+              { label: "For HR", to: "/docs/hr-guide/managing-employees" },
             ],
           },
           {
             title: "Releases",
             items: [
-              { label: "Changelog", to: "/changelog" },
+              { label: "Release notes", to: "/release-notes" },
               { label: "Versioning policy", to: "/versioning" },
-              { label: "Compatibility", to: "/compatibility" },
-              { label: "Release process", to: "/release-process" },
             ],
           },
           {
             title: "Product",
             items: [
-              { label: "HRIS app", href: "https://hris.click" },
-              { label: "API status", href: "https://api.hris.click/health" },
+              { label: "Open HRIS", href: "https://hris.click" },
+              { label: "FAQ", to: "/docs/faq" },
             ],
           },
         ],
@@ -148,7 +144,7 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
-        additionalLanguages: ["bash", "json", "http"],
+        additionalLanguages: ["bash"],
       },
     }),
 };

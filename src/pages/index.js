@@ -4,24 +4,24 @@ import styles from "./index.module.css";
 
 const SECTIONS = [
   {
-    title: "Get started",
-    body: "What HRIS covers, how to access it, and how roles and permissions work.",
-    to: "/docs/intro",
+    title: "For employees",
+    body: "Request leave, check your balance, and record your attendance.",
+    to: "/docs/employee-guide/requesting-leave",
   },
   {
-    title: "Guides",
-    body: "Employees, organization structure, leave, attendance, and notifications.",
-    to: "/docs/guides/employees",
+    title: "For managers",
+    body: "Approve your team's leave and see their attendance.",
+    to: "/docs/manager-guide/approving-leave",
   },
   {
-    title: "API reference",
-    body: "Every backend endpoint, published for each release.",
-    to: "/docs/api/overview",
+    title: "For HR",
+    body: "Manage employees, the organization structure, and leave policies.",
+    to: "/docs/hr-guide/managing-employees",
   },
   {
-    title: "Changelog",
-    body: "What changed in every release: features, fixes, and security updates.",
-    to: "/changelog",
+    title: "Release notes",
+    body: "See what is new and improved in every release.",
+    to: "/release-notes",
   },
 ];
 
@@ -29,27 +29,27 @@ export default function Home() {
   return (
     <Layout
       title="Home"
-      description="Guides, API reference, and release history for HRIS by PT Archenix Komputasi Indonesia"
+      description="User guides and release notes for HRIS by PT Archenix Komputasi Indonesia"
     >
       <header className={styles.hero}>
         <div className="container">
-          <h1 className={styles.title}>HRIS Documentation</h1>
+          <h1 className={styles.title}>HRIS Help Center</h1>
           <p className={styles.subtitle}>
-            Guides, API reference, and release history for the HRIS platform of
-            PT Archenix Komputasi Indonesia.
+            Guides for employees, managers, and HR at PT Archenix Komputasi
+            Indonesia.
           </p>
           <p className={styles.version}>
-            Latest release: <Link to="/changelog/v0-7-1">0.7.1</Link>
+            Latest release: <Link to="/release-notes/v0-7-1">0.7.1</Link>
           </p>
           <div className={styles.actions}>
             <Link className="button button--primary button--lg" to="/docs/intro">
-              Read the docs
+              Get started
             </Link>
             <Link
               className="button button--secondary button--lg"
-              to="/docs/api/overview"
+              href="https://hris.click"
             >
-              API overview
+              Open HRIS
             </Link>
           </div>
         </div>

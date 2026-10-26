@@ -1,28 +1,28 @@
 ---
 title: Introduction
-description: What HRIS 0.6 covers and how it differs from 0.7.
+description: The HRIS 0.6 user guide.
 slug: /intro
 ---
 
 # Introduction
 
-This documentation covers **HRIS 0.6.x**, released on October 13–14, 2026. This version is no longer maintained; use the [latest version](pathname:///docs/intro) where possible.
+This guide covers **HRIS 0.6.x**, released in October 2026. It is no longer updated; see the [latest guide](pathname:///docs/intro) for the current version.
 
-## What changed in 0.7
+## What is different in later versions
 
-| Area | 0.6 | 0.7 |
+| | 0.6 | 0.7 and later |
 | --- | --- | --- |
-| Line manager | Set manually per employee (`manager_id`) | Derived from the position structure |
-| Departments and positions | Flat lists; positions are company-wide | Nested units; positions belong to units and report to other positions |
-| Leave approver | The requester's `manager_id` | The derived line manager, rerouted automatically when the structure changes |
-| Sessions | Read from the database on every request | Cached in Redis; signing out revokes the token |
-| Verification codes for QA | Read from the email or the server log | `GET /auth/verification-code` for administrators |
+| Your manager | Set by HR for each employee | Follows automatically from your position |
+| Organization structure | Departments and positions are simple lists | Units, positions, and reporting lines, with an organization chart |
+| Pending leave when your manager changes | Stays with the previous manager; HR can decide it | Moves to your new manager automatically |
+| Signing out | Ends the session in the browser | Also ends the session on the server immediately |
 
-## Modules
+## Guides
 
-| Module | Guide |
+| I want to… | Guide |
 | --- | --- |
-| Employees, departments, and positions | [Employees](guides/employees.md) |
-| Leave management | [Leave management](guides/leave-management.md) |
-| Attendance | [Attendance](guides/attendance.md) |
-| Notifications | [Notifications](guides/notifications.md) |
+| Sign in | [Signing in](getting-started/signing-in.md) |
+| Request leave | [Requesting leave](employee-guide/requesting-leave.md) |
+| Check in and check out | [Attendance](employee-guide/attendance.md) |
+| Approve my team's leave | [Approving leave](manager-guide/approving-leave.md) |
+| Manage employees | [Managing employees](hr-guide/managing-employees.md) |

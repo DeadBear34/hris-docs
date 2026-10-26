@@ -1,0 +1,12 @@
+new:
+  label: New
+  description: Releases with new features
+improved:
+  label: Improved
+  description: Releases that improve existing features
+fix:
+  label: Fixed
+  description: Releases with bug fixes
+security:
+  label: Security
+  description: Releases with security improvements

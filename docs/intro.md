@@ -1,45 +1,33 @@
 ---
 title: Introduction
-description: What HRIS is, what it covers, and how this documentation is organized.
+description: What HRIS is and how to find the guide you need.
 slug: /intro
 ---
 
 # Introduction
 
-HRIS (Human Resource Information System) is the internal platform PT Archenix Komputasi Indonesia uses to manage employees, the organization structure, leave, and attendance. PT Archenix is a data center and artificial intelligence company.
+HRIS (Human Resource Information System) is where employees of PT Archenix Komputasi Indonesia request leave, record attendance, and receive updates, and where managers and HR run their daily people operations.
 
-This documentation covers **HRIS 0.7.x**. Use the version menu in the top-right corner to read the documentation for other versions.
+This documentation covers **HRIS 0.7.x**. Use the version menu in the top-right corner to read the guide for another version.
 
-## Components
+## Open HRIS
 
-| Component | URL | Description |
+HRIS runs in your browser at **[hris.click](https://hris.click)**. You can also install it on your phone or computer like an app; see [Signing in](getting-started/signing-in.md#installing-hris-as-an-app).
+
+## Find your guide
+
+| I am… | I want to… | Guide |
 | --- | --- | --- |
-| Web app | [hris.click](https://hris.click) | Interface for employees, managers, HR, and administrators (React, installable as a PWA) |
-| API | [api.hris.click](https://api.hris.click/health) | REST API and real-time notification WebSocket (Node.js, Express, PostgreSQL) |
-| Documentation | docs.hris.click | This site: guides, API reference, and release history |
+| An employee | Request leave and check my balance | [Requesting leave](employee-guide/requesting-leave.md) |
+| An employee | Check in and check out | [Attendance](employee-guide/attendance.md) |
+| A manager | Approve my team's leave | [Approving leave](manager-guide/approving-leave.md) |
+| A manager | See my team's attendance | [Team attendance](manager-guide/team-attendance.md) |
+| HR | Add and update employees | [Managing employees](hr-guide/managing-employees.md) |
+| HR | Set up departments, positions, and reporting lines | [Organization structure](hr-guide/organization-structure.md) |
+| HR | Configure leave types, holidays, and limits | [Leave policies](hr-guide/leave-policies.md) |
 
-## Modules
+Can't find an answer? Check the [FAQ](faq.md).
 
-| Module | What it does | Guide |
-| --- | --- | --- |
-| Employees | Employee records, accounts, photos, and bulk import | [Employees](guides/employees.md) |
-| Organization structure | Nested units, positions, reporting lines, and the org chart | [Organization structure](guides/organization-structure.md) |
-| Leave management | Requests, single-level approval, balances, and concurrent leave limits | [Leave management](guides/leave-management.md) |
-| Attendance | Check-in and check-out, offline sync, corrections, and reports | [Attendance](guides/attendance.md) |
-| Notifications | Inbox and real-time notifications | [Notifications](guides/notifications.md) |
+## What's new
 
-## How this documentation is organized
-
-- **Getting Started** explains how to access HRIS and how roles and permissions work.
-- **Guides** describe each module: its workflow, business rules, and edge cases.
-- **API** covers authentication, errors, and rate limits. The full endpoint reference is in [API Reference](pathname:///api/).
-- **Testing** contains procedures for QA.
-- The [Changelog](pathname:///changelog) lists every release. The [Versioning policy](pathname:///versioning) explains what each version number means.
-
-## Check the running version
-
-`GET https://api.hris.click/health` returns the backend version that is currently deployed:
-
-```json
-{ "success": true, "message": "Server running", "version": "0.7.1", "redis": "ready" }
-```
+See the [release notes](pathname:///release-notes) for what changed in each version.

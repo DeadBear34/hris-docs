@@ -4,24 +4,25 @@
       "type": "category",
       "label": "Getting Started",
       "collapsed": false,
-      "items": ["intro", "getting-started/accessing-hris", "getting-started/roles-and-permissions"]
+      "items": ["intro", "getting-started/signing-in"]
     },
     {
       "type": "category",
-      "label": "Guides",
+      "label": "For Employees",
       "collapsed": false,
-      "items": ["guides/employees", "guides/leave-management", "guides/attendance", "guides/notifications"]
+      "items": ["employee-guide/requesting-leave", "employee-guide/attendance"]
     },
     {
       "type": "category",
-      "label": "API",
+      "label": "For Managers",
       "collapsed": false,
-      "items": ["api/overview", "api/authentication", "api/errors", "api/rate-limits"]
+      "items": ["manager-guide/approving-leave"]
     },
     {
       "type": "category",
-      "label": "Testing",
-      "items": ["testing/registration-testing"]
+      "label": "For HR",
+      "collapsed": false,
+      "items": ["hr-guide/managing-employees"]
     }
   ]
 }
